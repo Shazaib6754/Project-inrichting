@@ -1,0 +1,215 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Gegenereerd op: 23 mrt 2026 om 13:16
+-- Serverversie: 10.4.32-MariaDB
+-- PHP-versie: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `dirk.supermarkt`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `artikelen`
+--
+
+CREATE TABLE `artikelen` (
+  `id` int(11) NOT NULL,
+  `titel` varchar(255) NOT NULL,
+  `inhoud` text NOT NULL,
+  `datum` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `artikelen`
+--
+
+INSERT INTO `artikelen` (`id`, `titel`, `inhoud`, `datum`) VALUES
+(2, 'Tweede artikel', 'Dit is de inhoud van het tweede artikel', '2026-03-23 11:38:10'),
+(3, 'Derde artikel', 'Dit is de inhoud van het derde artikel', '2026-03-23 11:38:10'),
+(4, 'Nieuw artikel', 'Dit is een nieuw toegevoegd artikel', '2026-03-23 11:38:11');
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `klant`
+--
+
+CREATE TABLE `klant` (
+  `id` int(11) NOT NULL,
+  `naam` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `telefoon` varchar(20) DEFAULT NULL,
+  `adres` varchar(150) DEFAULT NULL,
+  `postcode` varchar(10) DEFAULT NULL,
+  `plaats` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `klant`
+--
+
+INSERT INTO `klant` (`id`, `naam`, `email`, `telefoon`, `adres`, `postcode`, `plaats`) VALUES
+(1, 'Jan Jansen', 'jan@email.nl', '0612345678', 'Straat 10', '1234AB', 'Amsterdam');
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `klanten`
+--
+
+CREATE TABLE `klanten` (
+  `klant_id` int(11) NOT NULL,
+  `naam` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `klanten`
+--
+
+INSERT INTO `klanten` (`klant_id`, `naam`, `email`) VALUES
+(1, 'Raja', 'Raja@gmail.com'),
+(2, 'Piet', 'Piet99@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `producten`
+--
+
+CREATE TABLE `producten` (
+  `product_id` int(11) NOT NULL,
+  `naam` varchar(100) DEFAULT NULL,
+  `prijs` decimal(5,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `producten`
+--
+
+INSERT INTO `producten` (`product_id`, `naam`, `prijs`) VALUES
+(1, 'melk', 1.00),
+(2, 'kaas', 4.00);
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `verkooporders`
+--
+
+CREATE TABLE `verkooporders` (
+  `order_id` int(11) NOT NULL,
+  `klant_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `aantal` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `verkooporders`
+--
+
+INSERT INTO `verkooporders` (`order_id`, `klant_id`, `product_id`, `aantal`) VALUES
+(1, 1, 2, 3);
+
+--
+-- Indexen voor geëxporteerde tabellen
+--
+
+--
+-- Indexen voor tabel `artikelen`
+--
+ALTER TABLE `artikelen`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `titel` (`titel`),
+  ADD KEY `idx_datum` (`datum`);
+
+--
+-- Indexen voor tabel `klant`
+--
+ALTER TABLE `klant`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexen voor tabel `klanten`
+--
+ALTER TABLE `klanten`
+  ADD PRIMARY KEY (`klant_id`);
+
+--
+-- Indexen voor tabel `producten`
+--
+ALTER TABLE `producten`
+  ADD PRIMARY KEY (`product_id`);
+
+--
+-- Indexen voor tabel `verkooporders`
+--
+ALTER TABLE `verkooporders`
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `klant_id` (`klant_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- AUTO_INCREMENT voor geëxporteerde tabellen
+--
+
+--
+-- AUTO_INCREMENT voor een tabel `artikelen`
+--
+ALTER TABLE `artikelen`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT voor een tabel `klant`
+--
+ALTER TABLE `klant`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT voor een tabel `klanten`
+--
+ALTER TABLE `klanten`
+  MODIFY `klant_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT voor een tabel `producten`
+--
+ALTER TABLE `producten`
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT voor een tabel `verkooporders`
+--
+ALTER TABLE `verkooporders`
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Beperkingen voor geëxporteerde tabellen
+--
+
+--
+-- Beperkingen voor tabel `verkooporders`
+--
+ALTER TABLE `verkooporders`
+  ADD CONSTRAINT `verkooporders_ibfk_1` FOREIGN KEY (`klant_id`) REFERENCES `klanten` (`klant_id`),
+  ADD CONSTRAINT `verkooporders_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `producten` (`product_id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
